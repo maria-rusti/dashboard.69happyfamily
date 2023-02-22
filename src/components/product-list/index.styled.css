@@ -1,0 +1,12 @@
+img {
+    width: auto;
+    height: 150px;
+}
+.productCard{
+    border: 2px solid black;
+    margin: 10px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    padding: 20px;
+}
