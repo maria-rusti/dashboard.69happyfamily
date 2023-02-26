@@ -22,7 +22,6 @@ function App() {
       { currentPage === 'add-products' ? <>
       <AddProduct setProductsList={setProductsList} />
       <ProductsList products = {productsList}/>
-      
       </>: <Orders/>
 } 
     </div>

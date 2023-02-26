@@ -1,6 +1,15 @@
 import React, { useState } from 'react'
 import axios from 'axios';
 import './index.styled.css'
+import Button from '@mui/material/Button';
+import ButtonGroup from '@mui/material/ButtonGroup';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import ClickAwayListener from '@mui/material/ClickAwayListener';
+import Grow from '@mui/material/Grow';
+import Paper from '@mui/material/Paper';
+import Popper from '@mui/material/Popper';
+import MenuItem from '@mui/material/MenuItem';
+import MenuList from '@mui/material/MenuList';
 
 const AddProduct = (props) => {
 
@@ -14,6 +23,41 @@ const AddProduct = (props) => {
         image: '',
         
     };
+    const options = ['Electronics',
+    'Home & Kitchen',
+    'Toys & Games',
+    'Sports & Outdoors',
+    'Beauty & Personal Care',
+    'Health & Wellness',
+    'Grocery & Gourmet Food',
+    'Pet Supplies',
+    'Office & School Supplies',
+    'Books & Audible'];
+
+    const [open, setOpen] = React.useState(false);
+  const anchorRef = React.useRef(null);
+  const [selectedIndex, setSelectedIndex] = React.useState(1);
+
+  const handleClick = () => {
+    console.info(`You clicked ${options[selectedIndex]}`);
+  };
+
+  const handleMenuItemClick = (event, index) => {
+    setSelectedIndex(index);
+    setOpen(false);
+  };
+
+  const handleToggle = () => {
+    setOpen((prevOpen) => !prevOpen);
+  };
+
+  const handleClose = (event) => {
+    if (anchorRef.current && anchorRef.current.contains(event.target)) {
+      return;
+    }
+
+    setOpen(false);
+  };
 
     const [values, setValues] = useState(initialInput);
 
@@ -31,7 +75,7 @@ const AddProduct = (props) => {
         temp.price = Number(temp.price)
 
         console.log(typeof values["price"] )
-        axios.post('http://localhost:5050/teaching-be/api/products/add', {
+        axios.post('https://happyfamily.herokuapp.com/teaching-be/api/products/add', {
              ...temp
         })
         .then(response => console.log(response))
