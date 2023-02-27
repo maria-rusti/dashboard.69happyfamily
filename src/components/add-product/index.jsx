@@ -1,40 +1,31 @@
-import React, { useState } from 'react'
-import axios from 'axios';
-import './index.styled.css'
-import Button from '@mui/material/Button';
-import ButtonGroup from '@mui/material/ButtonGroup';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import ClickAwayListener from '@mui/material/ClickAwayListener';
-import Grow from '@mui/material/Grow';
-import Paper from '@mui/material/Paper';
-import Popper from '@mui/material/Popper';
-import MenuItem from '@mui/material/MenuItem';
-import MenuList from '@mui/material/MenuList';
+import React, { useState } from "react";
+import axios from "axios";
+import "./index.styled.css";
 
 const AddProduct = (props) => {
+  const { setProductsList } = props;
 
-    const {setProductsList} = props;
+  const initialInput = {
+    title: "",
+    price: "",
+    description: "",
+    category: "",
+    image: "",
+  };
+  const options = [
+    "Electronics",
+    "Home & Kitchen",
+    "Toys & Games",
+    "Sports & Outdoors",
+    "Beauty & Personal Care",
+    "Health & Wellness",
+    "Grocery & Gourmet Food",
+    "Pet Supplies",
+    "Office & School Supplies",
+    "Books & Audible",
+  ];
 
-    const initialInput = {
-        title: '',
-        price: 0,
-        description: '',
-        category: '',
-        image: '',
-        
-    };
-    const options = ['Electronics',
-    'Home & Kitchen',
-    'Toys & Games',
-    'Sports & Outdoors',
-    'Beauty & Personal Care',
-    'Health & Wellness',
-    'Grocery & Gourmet Food',
-    'Pet Supplies',
-    'Office & School Supplies',
-    'Books & Audible'];
-
-    const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
   const [selectedIndex, setSelectedIndex] = React.useState(1);
 
@@ -59,52 +50,71 @@ const AddProduct = (props) => {
     setOpen(false);
   };
 
-    const [values, setValues] = useState(initialInput);
+  const [values, setValues] = useState(initialInput);
 
-    const resetValues = (e) => {
-        e.preventDefault();
-        setValues(initialInput);
+  const resetValues = (e) => {
+    e.preventDefault();
+    setValues(initialInput);
+  };
+
+  const addProduct = (e) => {
+    e.preventDefault();
+    setProductsList((prev) => prev.concat(values));
+    let temp = {
+      ...values,
     };
+    temp.price = Number(temp.price);
 
-    const addProduct = (e) => {
-        e.preventDefault();
-        setProductsList(prev => prev.concat(values));
-        let temp = {
-            ...values
-        }
-        temp.price = Number(temp.price)
+    console.log(typeof values["price"]);
+    axios
+      .post("https://happyfamily.herokuapp.com/teaching-be/api/products/add", {
+        ...temp,
+      })
+      .then((response) => console.log(response))
+      .catch((error) => console.log(error));
+    setValues(initialInput);
+  };
 
-        console.log(typeof values["price"] )
-        axios.post('https://happyfamily.herokuapp.com/teaching-be/api/products/add', {
-             ...temp
-        })
-        .then(response => console.log(response))
-        .catch(error => console.log(error))
-        setValues(initialInput);
-    };
-
-    const isDisabled = (values.category.length === 0 ||
-        values.description.length === 0 ||
-        values.image.length === 0 ||
-        values.price.length === 0 ||
-        values.title.length === 0) 
+  const isDisabled =
+    values.category.length === 0 ||
+    values.description.length === 0 ||
+    values.image.length === 0 ||
+    values.price.length === 0 ||
+    values.title.length === 0;
 
   return (
     <div>
-        <form>
-            {
-                Object.keys(initialInput).map((el) => {
-                   return <div key={el} className='product-field'>
-                        <label htmlFor={el}>{el.toUpperCase()}</label>
-                        <input type={values[el] === 'price' ? 'number' : "text"} name={el} id={el} value={values[el]} onChange={(e) => values[el] === 'price' ? setValues(prev => ({...prev, [el]: parseInt(e.target.value)})) : setValues(prev => ({...prev, [el]: e.target.value }))}/>
-                    </div>
-                })
-            }
-            <button disabled={isDisabled} onClick={addProduct}>Add</button>
-            <button onClick={resetValues}>Cancel</button>
-        </form>
+      <form>
+        {Object.keys(initialInput).map((el) => {
+          return (
+            <div key={el} className="product-field">
+              <input
+                type="text"
+                class="form__input"
+                id="name"
+                placeholder={`${el}`.toUpperCase()}
+                required=""
+                name={el}
+                value={values[el]}
+                onChange={(e) =>
+                  values[el] === "price"
+                    ? setValues((prev) => ({
+                        ...prev,
+                        [el]: parseInt(e.target.value),
+                      }))
+                    : setValues((prev) => ({ ...prev, [el]: e.target.value }))
+                }
+              />
+            </div>
+          );
+        })}
+        <button disabled={isDisabled} onClick={addProduct}>
+          Add
+        </button>
+        <button onClick={resetValues}>Cancel</button>
+      </form>
     </div>
-  )
-}
+  );
+};
 
 export default AddProduct;

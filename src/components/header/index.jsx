@@ -1,31 +1,31 @@
 import React, { useEffect, useState } from "react";
 import "./index.styled.css";
+import Stack from "@mui/material/Stack";
+import Button from "@mui/material/Button";
 
 const Header = (props) => {
   const { currentPage, setCurrentPage } = props;
 
   const changePage = (e) => {
     e.preventDefault();
-    setCurrentPage(isAddProduct ? "orders" : "add-products");
+    setCurrentPage(isAddProduct ? "Orders" : "add-products");
   };
 
   const isAddProduct = currentPage === "add-products";
 
   return (
     <div className="container">
-      <div className="full-width">
-        <div className="title">
-          <h1>69HappyFamily</h1>
-        </div>
-        <div>
-          <h4>{isAddProduct ? "Add Products" : currentPage}</h4>
-        </div>
-      </div>
+      <h4>{isAddProduct ? "Add Products" : currentPage}</h4>
 
-      <div className="btn" onClick={changePage}>
-        {isAddProduct ? "Orders" : "Add Products"}
+      <h1 className="font">69HappyFamily</h1>
+
+      <div className="btn">
+        <Button variant="contained" onClick={changePage}>
+          {isAddProduct ? " Go to orders" : "Add Products"}
+        </Button>
       </div>
     </div>
+    // </div>
   );
 };
 

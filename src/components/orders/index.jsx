@@ -1,11 +1,8 @@
-import React from 'react'
+import React from "react";
+import axios from "axios";
 
 const Orders = () => {
-  return (
-    <div>
-        Orders
-    </div>
-  )
-}
+  return <div>Orders</div>;
+};
 
 export default Orders;
