@@ -45,6 +45,7 @@ const ProductsList = (props) => {
               </Typography>
             </Box>
           </div>
+          <button>Delete this item</button>
         </div>
       ))}
     </div>

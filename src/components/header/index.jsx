@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./index.styled.css";
+import Button from "@mui/material/Button";
+import PersistentDrawerLeft from "../header2/index";
 
 const Header = (props) => {
   const { currentPage, setCurrentPage } = props;
@@ -12,20 +14,21 @@ const Header = (props) => {
   const isAddProduct = currentPage === "add-products";
 
   return (
-    <div className="container">
-      <div className="full-width">
-        <div className="title">
-          <h1>69HappyFamily</h1>
-        </div>
-        <div>
-          <h4>{isAddProduct ? "Add Products" : currentPage}</h4>
-        </div>
-      </div>
+    <PersistentDrawerLeft
+      currentPage={currentPage}
+      setCurrentPage={setCurrentPage}
+    />
+    // <div className="container">
+    //   <h4>{isAddProduct ? "Add Products" : currentPage}</h4>
 
-      <div className="btn" onClick={changePage}>
-        {isAddProduct ? "Orders" : "Add Products"}
-      </div>
-    </div>
+    //   <h1 className="font">69HappyFamily</h1>
+
+    //   <div className="btn">
+    //     <Button variant="contained" onClick={changePage}>
+    //       {isAddProduct ? " Go to orders" : "Add Products"}
+    //     </Button>
+    //   </div>
+    // </div>
   );
 };
 

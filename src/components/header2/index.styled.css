@@ -1,0 +1,6 @@
+.btn {
+  height: 40px;
+  margin-right: 50px;
+  cursor: url("../../assets/pointer.png"), pointer;
+  font-size: x-large;
+}
