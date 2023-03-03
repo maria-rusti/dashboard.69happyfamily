@@ -1,16 +1,27 @@
 import { Button, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import React, { useMemo } from "react";
+import React, { useState, useEffect } from "react";
 import "./index.styled.css";
 
 const ProductsList = (props) => {
-  const { products } = props;
+  const [products, setProducts] = useState([]);
 
-  const liveProducts = useMemo(() => products, [products]);
+  useEffect(() => {
+      const getProducts = async () => {
+          try {
+              const response = await fetch('https://happyfamily.herokuapp.com/teaching-be/api/products/show');
+              const json = await response.json();
+             setProducts(json.products);
+          } catch (error) {
+              console.log(error);
+          }
+      }
+      getProducts();
+    },[])
 
   return (
     <div className="cardStyle">
-      {liveProducts?.map((el, index) => (
+      {products?.map((el, index) => (
         <div className="productCard" key={el?.title + index}>
           <img src={el?.image} alt={el?.title} />
           <div>

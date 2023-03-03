@@ -90,7 +90,7 @@ const AddProduct = (props) => {
             <div key={el} className="product-field">
               <input
                 type="text"
-                class="form__input"
+                className="form__input"
                 id="name"
                 placeholder={`${el}`.toUpperCase()}
                 required=""
