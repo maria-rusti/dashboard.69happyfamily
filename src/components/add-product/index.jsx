@@ -50,6 +50,15 @@ const AddProduct = (props) => {
     setOpen(false);
   };
 
+  const  includesValidCategory = () => {
+    options.map((option, index) => {
+      if(options.includes(option)){
+        return true;
+      }
+      else return false;
+    })
+  };
+
   const [values, setValues] = useState(initialInput);
 
   const resetValues = (e) => {
@@ -108,7 +117,7 @@ const AddProduct = (props) => {
             </div>
           );
         })}
-        <button disabled={isDisabled} onClick={addProduct}>
+        <button disabled={isDisabled && includesValidCategory} onClick={addProduct}>
           Add
         </button>
         <button onClick={resetValues}>Cancel</button>
