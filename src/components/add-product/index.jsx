@@ -39,7 +39,7 @@ const AddProduct = (props) => {
   const resetValues = (e) => {
     e.preventDefault();
     setValues(initialInput);
-  };
+  }; 
 
   const addProduct = (e) => {
     e.preventDefault();
